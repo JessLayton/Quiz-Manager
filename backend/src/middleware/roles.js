@@ -1,25 +1,25 @@
-const isAdmin = async (req, res, next) => {
+const editorAccess = async (req, res, next) => {
   try {
-    if (req.role === 'admin') {
+    if (req.role === 'editor') {
       next();
     } else {
-      return res.status(403).json({ msg: 'Forbidden - admin access required' });
+      return res.status(403).json({ msg: 'Forbidden - editor access required' });
     }
   } catch (err) {
     console.error(err);
   }
 };
 
-const isAssessor = async (req, res, next) => {
+const viewingAccess = async (req, res, next) => {
   try {
-    if (req.role === 'admin' || req.role === 'assessor') {
+    if (req.role === 'editor' || req.role === 'viewer') {
       next();
     } else {
-      return res.status(403).json({ msg: 'Forbidden - assessor access required' });
+      return res.status(403).json({ msg: 'Forbidden - viewing access required' });
     }
   } catch (err) {
     console.error(err);
   }
 };
 
-module.exports = { isAdmin, isAssessor };
+module.exports = { editorAccess, viewingAccess };

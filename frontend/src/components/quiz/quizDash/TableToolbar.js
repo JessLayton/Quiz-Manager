@@ -54,7 +54,7 @@ const TableToolbar = ({
                 View Quiz
               </Button>
             </Grid>
-            {role === 'admin'
+            {role === 'editor'
               ? (
                 <>
                   <Grid item>
@@ -70,7 +70,7 @@ const TableToolbar = ({
                 </>
               )
               : null}
-            {role === 'admin' || role === 'assessor'
+            {role === 'editor' || role === 'viewer'
               ? (
                 <Grid item>
                   <Button onClick={goToViewQuizWithAnswers} variant='contained' color='secondary' xs={3}>

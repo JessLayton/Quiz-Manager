@@ -1,27 +1,28 @@
 import React from 'react';
+import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
 
 import { selectRole } from '../components/auth/userSlice';
 
-const PrivateRoute = ({ component: Component, path }) => {
+const ViewAllRoute = ({ component: Component, path }) => {
   const role = useSelector(selectRole);
+
   return (
     <Route
       path={path}
       render={() => (
-        role
+        (role === 'editor' || role === 'viewer')
           ? <Component />
-          : <Redirect to='/login' />
+          : <Redirect to='/' />
       )}
     />
   );
 };
 
-PrivateRoute.propTypes = {
+ViewAllRoute.propTypes = {
   component: PropTypes.elementType.isRequired,
   path: PropTypes.string.isRequired,
 };
 
-export default PrivateRoute;
+export default ViewAllRoute;

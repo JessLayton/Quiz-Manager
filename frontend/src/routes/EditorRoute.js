@@ -5,14 +5,14 @@ import { Route, Redirect } from 'react-router-dom';
 
 import { selectRole } from '../components/auth/userSlice';
 
-const AdminRoute = ({ component: Component, path }) => {
+const Editor = ({ component: Component, path }) => {
   const role = useSelector(selectRole);
 
   return (
     <Route
       path={path}
       render={() => (
-        role === 'admin'
+        role === 'editor'
           ? <Component />
           : <Redirect to='/' />
       )}
@@ -20,9 +20,9 @@ const AdminRoute = ({ component: Component, path }) => {
   );
 };
 
-AdminRoute.propTypes = {
+Editor.propTypes = {
   component: PropTypes.elementType.isRequired,
   path: PropTypes.string.isRequired,
 };
 
-export default AdminRoute;
+export default Editor;

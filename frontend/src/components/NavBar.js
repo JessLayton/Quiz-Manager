@@ -67,7 +67,7 @@ const Navbar = ({ pageHeading }) => {
             </Grid>
             <Grid item>
               <Grid container spacing={2}>
-                {role === 'admin' ? (
+                {role === 'editor' ? (
                   <Grid item>
                     <Button onClick={goToCreateQuiz} variant='contained' color='secondary'>
                       Create New Quiz

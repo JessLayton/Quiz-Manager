@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
   username: { type: String, maxLength: 25, minlength: 5 },
   role: {
     type: String,
-    default: 'user',
+    default: 'restricted',
   },
 });
 

@@ -2,9 +2,9 @@ const router = require('express').Router();
 
 const Quiz = require('../models/quizModel');
 const auth = require('../middleware/auth');
-const { isAdmin, isAssessor } = require('../middleware/roles');
+const { editorAccess, viewingAccess } = require('../middleware/roles');
 
-router.post('/createQuiz', auth, isAdmin, async ({ user, body: { name, description, questions } }, res) => {
+router.post('/createQuiz', auth, editorAccess, async ({ user, body: { name, description, questions } }, res) => {
   try {
     if (!name || !description || !questions) {
       return res.status(400).send({ msg: 'Fields cannot be empty' });
@@ -66,7 +66,7 @@ router.post('/getQuizNoAnswers', auth, async (req, res) => {
   }
 });
 
-router.post('/getQuizWithAnswers', auth, isAssessor, async (req, res) => {
+router.post('/getQuizWithAnswers', auth, viewingAccess, async (req, res) => {
   const { id } = req.body;
   try {
     Quiz.findById(id, (error, quiz) => {
@@ -85,7 +85,7 @@ router.post('/getQuizWithAnswers', auth, isAssessor, async (req, res) => {
   }
 });
 
-router.delete('/deleteQuiz/:id', auth, isAdmin, async (req, res) => {
+router.delete('/deleteQuiz/:id', auth, editorAccess, async (req, res) => {
   const { id } = req.params;
   try {
     await Quiz.deleteOne({ _id: id }, (error, quizResponse) => {
@@ -100,7 +100,7 @@ router.delete('/deleteQuiz/:id', auth, isAdmin, async (req, res) => {
   }
 });
 
-router.put('/updateQuiz/:id', auth, isAdmin, async (req, res) => {
+router.put('/updateQuiz/:id', auth, editorAccess, async (req, res) => {
   const { id } = req.params;
   try {
     const {

@@ -32,6 +32,11 @@ const TableToolbar = ({
   const goToViewQuiz = () => {
     history.push(`/viewQuiz/${selected}`);
   };
+
+  const goToViewQuizWithAnswers = () => {
+    history.push(`/viewQuizWithAnswers/${selected}`);
+  };
+
   if (role) {
     return (
       <Toolbar
@@ -68,8 +73,8 @@ const TableToolbar = ({
             {role === 'admin' || role === 'assessor'
               ? (
                 <Grid item>
-                  <Button onClick={goToViewQuiz} variant='contained' color='secondary' xs={3}>
-                    View Quiz
+                  <Button onClick={goToViewQuizWithAnswers} variant='contained' color='secondary' xs={3}>
+                    View Quiz With Answers
                   </Button>
                 </Grid>
               )

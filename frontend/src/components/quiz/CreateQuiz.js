@@ -36,9 +36,21 @@ const CreateQuiz = () => {
   };
 
   const removeQuestion = (index) => {
-    const deletedQuestion = [...questionData];
-    deletedQuestion.splice(index, 1);
-    setQuestionData(deletedQuestion);
+    const data = [...questionData];
+    data.splice(index, 1);
+    setQuestionData(data);
+  };
+
+  const addOption = (questionIndex) => {
+    const data = [...questionData];
+    data[questionIndex].options = [...data[questionIndex].options, ''];
+    setQuestionData(data);
+  };
+
+  const removeOption = (questionIndex, optionIndex) => {
+    const data = [...questionData];
+    data[questionIndex].options.splice(optionIndex, 1);
+    setQuestionData(data);
   };
 
   const checkCorrectOption = (event, index) => {
@@ -61,6 +73,8 @@ const CreateQuiz = () => {
         checkCorrectOption={checkCorrectOption}
         addQuestion={addQuestion}
         removeQuestion={removeQuestion}
+        addOption={addOption}
+        removeOption={removeOption}
         formType='Create Quiz'
       />
     </>

@@ -11,9 +11,11 @@ import {
   Divider,
   RadioGroup,
   FormControl,
+  Tooltip,
+  IconButton,
 } from '@material-ui/core';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
-// import QuestionOptions from './QuestionOptions';
 import Option from './Option';
 
 const useStyles = makeStyles(() => ({
@@ -33,7 +35,7 @@ const useStyles = makeStyles(() => ({
 
 const QuizForm = ({
   handleSubmit, questionData, setQuestionData, updateQuizName, updateQuizDescription,
-  checkCorrectOption, addQuestion, removeQuestion, name, description, formType,
+  checkCorrectOption, addQuestion, removeQuestion, addOption, removeOption, name, description, formType,
 }) => {
   const classes = useStyles();
 
@@ -142,27 +144,34 @@ const QuizForm = ({
                     <Grid item>
                       <FormControl>
                         <RadioGroup value={question.correctOption} onChange={(event) => checkCorrectOption(event, index)}>
-                          {question.options.map((option, optionIndex) => (
-                            <Option
-                              value={option}
-                              onChange={(event) => handleQuestionData(event, index)}
-                              name={optionIndex}
-                              label={`Option ${optionIndex + 1}`}
-                              checked={optionIndex}
-                            />
-                          ))}
+                          <Grid container direction='column' spacing={1}>
+                            {question.options.map((option, optionIndex) => (
+                              <Grid item>
+                                <Option
+                                  value={option}
+                                  onChange={(event) => handleQuestionData(event, index)}
+                                  name={optionIndex}
+                                  label={`Option ${optionIndex + 1}`}
+                                  checked={optionIndex}
+                                  correctOption={question.correctOption}
+                                  size={question.options.length}
+                                  removeOption={() => removeOption(index, optionIndex)}
+                                />
+                              </Grid>
+                            ))}
+                          </Grid>
                         </RadioGroup>
                       </FormControl>
+                      <Grid item>
+                        {question.options.length < 5 ? (
+                          <Tooltip title='Add option' placement='right'>
+                            <IconButton color='secondary'>
+                              <AddCircleIcon onClick={() => addOption(index)} />
+                            </IconButton>
+                          </Tooltip>
+                        ) : null}
+                      </Grid>
                     </Grid>
-                    {/* <Grid item> */}
-                    {/* <QuestionOptions
-                        checkCorrectOption={(event) => checkCorrectOption(event, index)}
-                        options={questionData[index].options}
-                        correctOption={correctOption[index]}
-                        index={index}
-                        handleQuestionData={(event) => handleQuestionData(event, index)}
-                      /> */}
-                    {/* </Grid> */}
                   </Grid>
                 ))}
                 <Grid item>
@@ -190,16 +199,16 @@ QuizForm.propTypes = {
   updateQuizName: PropTypes.func.isRequired,
   updateQuizDescription: PropTypes.func.isRequired,
   checkCorrectOption: PropTypes.func.isRequired,
-  // correctOption: PropTypes.arrayOf(PropTypes.string).isRequired,
   addQuestion: PropTypes.func.isRequired,
-  removeQuestion: PropTypes.func,
+  removeQuestion: PropTypes.func.isRequired,
+  addOption: PropTypes.func.isRequired,
+  removeOption: PropTypes.func.isRequired,
   name: PropTypes.string,
   description: PropTypes.string,
   formType: PropTypes.string,
 };
 
 QuizForm.defaultProps = {
-  removeQuestion: undefined,
   name: '',
   description: '',
   formType: 'Create Quiz',

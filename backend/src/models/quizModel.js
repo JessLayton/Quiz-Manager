@@ -9,8 +9,8 @@ const questionSchema = new mongoose.Schema({
     type: [String],
     required: true,
     validate: {
-      validator: (options) => options.length === 4,
-      message: () => 'Questions must have 4 options',
+      validator: (options) => (options.length >= 3 && options.length <= 5),
+      message: () => 'Questions must have 3 - 5 options',
     },
   },
   correctOption: {

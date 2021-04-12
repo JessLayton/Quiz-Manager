@@ -51,18 +51,6 @@ const assessorGetQuiz = async (id) => {
   return response;
 };
 
-const markQuiz = async (id, answers) => {
-  let response;
-  if (localStorage.getItem('auth-token')) {
-    try {
-      response = await post('/quizzes/markQuiz', { id, answers }, getHeaders());
-    } catch (err) {
-      console.error(err);
-    }
-  }
-  return response;
-};
-
 const createNewQuiz = async (name, description, questions) => {
   const quizData = { name, description, questions };
   let response;
@@ -100,5 +88,5 @@ const updateQuiz = async (id, name, description, questions) => {
 };
 
 export {
-  getAllQuizzes, getQuiz, getQuestions, assessorGetQuiz, markQuiz, createNewQuiz, deleteQuiz, updateQuiz,
+  getAllQuizzes, getQuiz, getQuestions, assessorGetQuiz, createNewQuiz, deleteQuiz, updateQuiz,
 };

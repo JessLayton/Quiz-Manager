@@ -104,36 +104,6 @@ router.post('/assessorGetQuiz', auth, isAssessor, async (req, res) => {
   }
 });
 
-router.post('/markQuiz', auth, async (req, res) => {
-  const { id, answers } = req.body;
-  try {
-    Quiz.findById(id, (error, quiz) => {
-      if (error) {
-        res.send(500).json({ error });
-      }
-      if (quiz) {
-        const correctAnswers = [];
-        quiz.questions.forEach((question) => {
-          correctAnswers.push(question.options[question.correctOption - 1]);
-        });
-        let score = 0;
-        correctAnswers.forEach((correctAnswer, index) => {
-          if (answers[index] === correctAnswer) {
-            score += 1;
-          }
-        });
-        const result = (score / answers.length) * 100;
-        res.status(200).json({ result });
-      } else {
-        res.status(404).json({ msg: 'Quiz not found' });
-      }
-    });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ err: error });
-  }
-});
-
 router.delete('/deleteQuiz/:id', auth, isAdmin, async (req, res) => {
   const { id } = req.params;
   try {

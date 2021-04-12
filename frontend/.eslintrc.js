@@ -32,5 +32,7 @@ module.exports = {
     'consistent-return': 'off',
     'no-underscore-dangle': ['error', { allow: ['_id'] }],
     'no-console': 'off',
+    'linebreak-style': 0,
+
   },
 };

@@ -10,7 +10,6 @@ import Register from '../components/auth/register/Register';
 import Login from '../components/auth/login/Login';
 import CreateQuiz from '../components/quiz/CreateQuiz';
 import UpdateQuiz from '../components/quiz/UpdateQuiz';
-import Quiz from '../components/quiz/playQuiz/Quiz';
 import ViewQuiz from '../components/quiz/viewQuiz/ViewQuiz';
 import QuizTable from '../components/quiz/quizDash/QuizTable';
 
@@ -22,7 +21,6 @@ const Routes = () => (
       <AdminRoute path='/createQuiz' component={CreateQuiz} />
       <AdminRoute path='/updateQuiz/:id' component={UpdateQuiz} />
       <AssessorRoute path='/viewQuiz/:id' component={ViewQuiz} />
-      <PrivateRoute path='/quiz/:id' component={Quiz} />
       <Route path='/register'>
         <Register />
       </Route>

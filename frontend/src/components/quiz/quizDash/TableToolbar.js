@@ -25,10 +25,6 @@ const TableToolbar = ({
 
   const role = useSelector(selectRole);
 
-  const goToPlayQuiz = () => {
-    history.push(`/quiz/${selected}`);
-  };
-
   const goToUpdateQuiz = () => {
     history.push(`/updateQuiz/${selected}`);
   };
@@ -49,8 +45,8 @@ const TableToolbar = ({
               <SearchField input={searchInput} updateInput={updateSearchInput} xs={3} />
             </Grid>
             <Grid item>
-              <Button onClick={goToPlayQuiz} variant='contained' color='secondary' xs={3}>
-                Play Quiz
+              <Button onClick={goToViewQuiz} variant='contained' color='secondary' xs={3}>
+                View Quiz
               </Button>
             </Grid>
             {role === 'admin'

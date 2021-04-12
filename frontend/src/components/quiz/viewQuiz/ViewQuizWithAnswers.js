@@ -11,7 +11,7 @@ import {
 
 import Loading from '../../Loading';
 import Navbar from '../../NavBar';
-import { assessorGetQuiz } from '../../../connections/quizDatabaseService';
+import { getQuizWithAnswers } from '../../../connections/quizDatabaseService';
 
 const useStyles = makeStyles(() => ({
   card: {
@@ -33,11 +33,10 @@ const ViewQuizzes = () => {
 
   const getQuizData = async () => {
     const quizId = params.id;
-    let questionResponse;
     try {
-      questionResponse = await assessorGetQuiz(quizId);
-      if (questionResponse && questionResponse.data) {
-        setQuizData(questionResponse.data.quiz);
+      const quizResponse = await getQuizWithAnswers(quizId);
+      if (quizResponse && quizResponse.data) {
+        setQuizData(quizResponse.data.quiz);
       }
     } catch (error) {
       console.error(error);

@@ -43,49 +43,30 @@ router.get('/getAllQuizzes', auth, async (req, res) => {
   }
 });
 
-router.post('/getQuiz', auth, async (req, res) => {
+router.post('/getQuizNoAnswers', auth, async (req, res) => {
   const { id } = req.body;
   try {
-    Quiz.findById(id, (error, quiz) => {
-      if (error) {
-        res.status(500).json({ error });
-      }
-      if (quiz) {
-        res.status(200).json({ quiz });
-      } else {
-        res.status(404).json({ msg: 'Quiz not found' });
-      }
-    });
+    Quiz.findById(id,
+      (error, quiz) => {
+        if (error) {
+          res.status(500).json({ error });
+        }
+        if (quiz) {
+          quiz.questions.forEach((question) => {
+            question.correctOption = undefined;
+          });
+          res.status(200).json({ quiz });
+        } else {
+          res.status(404).json({ msg: 'Quiz not found' });
+        }
+      });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error });
   }
 });
 
-router.post('/getQuestions', auth, async (req, res) => {
-  const { id } = req.body;
-  try {
-    Quiz.findById(
-      id,
-      { questions: { correctOption: 0 } }, // returns questions without correct option
-      (error, quiz) => {
-        if (error) {
-          res.status(500).json({ error });
-        }
-        if (quiz) {
-          res.status(200).json({ questions: quiz.questions });
-        } else {
-          res.status(404).json({ msg: 'No quiz questions found' });
-        }
-      },
-    );
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ err: error });
-  }
-});
-
-router.post('/assessorGetQuiz', auth, isAssessor, async (req, res) => {
+router.post('/getQuizWithAnswers', auth, isAssessor, async (req, res) => {
   const { id } = req.body;
   try {
     Quiz.findById(id, (error, quiz) => {

@@ -3,7 +3,7 @@ import { useParams, useHistory, Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import NavBar from '../NavBar';
-import { updateQuiz, getQuiz } from '../../connections/quizDatabaseService';
+import { updateQuiz, getQuizWithAnswers } from '../../connections/quizDatabaseService';
 import QuizForm from './quizForm/QuizForm';
 import Loading from '../Loading';
 import { showError, showSuccess } from '../notifier/notifierSlice';
@@ -62,7 +62,7 @@ const UpdateQuiz = () => {
     const quizId = params.id;
     let quizResponse;
     try {
-      quizResponse = await getQuiz(quizId);
+      quizResponse = await getQuizWithAnswers(quizId);
       if (quizResponse && quizResponse.data) {
         const quizData = quizResponse.data.quiz;
         setName(quizData.name);

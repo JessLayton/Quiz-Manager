@@ -9,9 +9,12 @@ import {
   TextField,
   Card,
   Divider,
+  RadioGroup,
+  FormControl,
 } from '@material-ui/core';
 
-import QuestionOptions from './QuestionOptions';
+// import QuestionOptions from './QuestionOptions';
+import Option from './Option';
 
 const useStyles = makeStyles(() => ({
   quizCard: {
@@ -30,7 +33,7 @@ const useStyles = makeStyles(() => ({
 
 const QuizForm = ({
   handleSubmit, questionData, setQuestionData, updateQuizName, updateQuizDescription,
-  checkCorrectOption, correctOption, addQuestion, removeQuestion, name, description, formType,
+  checkCorrectOption, addQuestion, removeQuestion, name, description, formType,
 }) => {
   const classes = useStyles();
 
@@ -48,16 +51,16 @@ const QuizForm = ({
       case 'question':
         values[index].question = event.target.value;
         break;
-      case 'optionOne':
+      case '0':
         values[index].options[0] = event.target.value;
         break;
-      case 'optionTwo':
+      case '1':
         values[index].options[1] = event.target.value;
         break;
-      case 'optionThree':
+      case '2':
         values[index].options[2] = event.target.value;
         break;
-      case 'optionFour':
+      case '3':
         values[index].options[3] = event.target.value;
         break;
       default:
@@ -137,14 +140,29 @@ const QuizForm = ({
                         : null}
                     </Grid>
                     <Grid item>
-                      <QuestionOptions
+                      <FormControl>
+                        <RadioGroup value={question.correctOption} onChange={(event) => checkCorrectOption(event, index)}>
+                          {question.options.map((option, optionIndex) => (
+                            <Option
+                              value={option}
+                              onChange={(event) => handleQuestionData(event, index)}
+                              name={optionIndex}
+                              label={`Option ${optionIndex + 1}`}
+                              checked={optionIndex}
+                            />
+                          ))}
+                        </RadioGroup>
+                      </FormControl>
+                    </Grid>
+                    {/* <Grid item> */}
+                    {/* <QuestionOptions
                         checkCorrectOption={(event) => checkCorrectOption(event, index)}
                         options={questionData[index].options}
                         correctOption={correctOption[index]}
                         index={index}
                         handleQuestionData={(event) => handleQuestionData(event, index)}
-                      />
-                    </Grid>
+                      /> */}
+                    {/* </Grid> */}
                   </Grid>
                 ))}
                 <Grid item>
@@ -172,7 +190,7 @@ QuizForm.propTypes = {
   updateQuizName: PropTypes.func.isRequired,
   updateQuizDescription: PropTypes.func.isRequired,
   checkCorrectOption: PropTypes.func.isRequired,
-  correctOption: PropTypes.arrayOf(PropTypes.string).isRequired,
+  // correctOption: PropTypes.arrayOf(PropTypes.string).isRequired,
   addQuestion: PropTypes.func.isRequired,
   removeQuestion: PropTypes.func,
   name: PropTypes.string,

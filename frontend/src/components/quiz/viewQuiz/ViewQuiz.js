@@ -36,7 +36,6 @@ const ViewQuizzes = () => {
     try {
       const quizResponse = await getQuizNoAnswers(quizId);
       if (quizResponse && quizResponse.data) {
-        console.log(quizResponse.data);
         setQuizData(quizResponse.data.quiz);
       }
     } catch (error) {

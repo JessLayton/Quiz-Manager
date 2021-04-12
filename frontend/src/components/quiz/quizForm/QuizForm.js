@@ -65,6 +65,9 @@ const QuizForm = ({
       case '3':
         values[index].options[3] = event.target.value;
         break;
+      case '4':
+        values[index].options[4] = event.target.value;
+        break;
       default:
         break;
     }

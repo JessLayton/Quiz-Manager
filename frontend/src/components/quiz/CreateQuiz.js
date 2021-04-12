@@ -23,7 +23,7 @@ const CreateQuiz = () => {
         dispatch(showSuccess(`Created quiz: ${name}`));
         history.push('/');
       } else {
-        dispatch(showError('Failed to create quiz A'));
+        dispatch(showError('Failed to create quiz'));
       }
     } catch (error) {
       console.error(error);

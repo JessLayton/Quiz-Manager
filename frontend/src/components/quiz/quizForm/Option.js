@@ -34,18 +34,22 @@ const Option = ({
       </Tooltip>
     </Grid>
     <Grid item>
-      <Tooltip title='Remove option' placement='top-start'>
-        <IconButton color='secondary' onClick={removeOption} disabled={size <= 3}>
-          <RemoveCircleIcon />
-        </IconButton>
+      <Tooltip title={size > 3 ? 'Remove option' : 'Must have 3 or more options'} placement='top-start'>
+        <span>
+          <IconButton color='secondary' onClick={removeOption} disabled={size <= 3}>
+            <RemoveCircleIcon />
+          </IconButton>
+        </span>
       </Tooltip>
     </Grid>
     <Grid item>
       {size === (optionIndex + 1) ? (
-        <Tooltip title='Add option' placement='right'>
-          <IconButton color='secondary' onClick={addOption} disabled={size >= 5}>
-            <AddCircleIcon />
-          </IconButton>
+        <Tooltip title={size < 5 ? 'Add option' : 'Cannot have more than 5 options'} placement='top-start'>
+          <span>
+            <IconButton color='secondary' onClick={addOption} disabled={size >= 5}>
+              <AddCircleIcon />
+            </IconButton>
+          </span>
         </Tooltip>
       ) : null}
     </Grid>

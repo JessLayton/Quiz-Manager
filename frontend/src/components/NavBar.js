@@ -8,8 +8,8 @@ import {
 } from '@material-ui/core';
 
 import theme from '../theme';
-
 import { clearUser, selectRole } from './auth/userSlice';
+import logo from '../assets/logo-placeholder2.png';
 
 const useStyles = makeStyles({
   navbarSpacer: {
@@ -23,6 +23,13 @@ const useStyles = makeStyles({
     '&:hover': {
       cursor: 'pointer',
     },
+  },
+  logo: {
+    '&:hover': {
+      cursor: 'pointer',
+    },
+    height: '50px',
+    width: '240px',
   },
   pageHeading: {
     color: theme.palette.secondary.dark,
@@ -41,10 +48,6 @@ const Navbar = ({ pageHeading }) => {
     localStorage.removeItem('auth-token');
   };
 
-  const goToHome = () => {
-    history.push('/');
-  };
-
   const goToCreateQuiz = (event) => {
     event.preventDefault();
     history.push('/createQuiz');
@@ -56,9 +59,9 @@ const Navbar = ({ pageHeading }) => {
         <Toolbar className={classes.toolBar}>
           <Grid container direction='row' justify='space-between' alignItems='center'>
             <Grid item>
-              <Typography variant='h3' onClick={goToHome} className={classes.appHeading}>
-                QuizApp
-              </Typography>
+              <a href='/'>
+                <img src={logo} alt='logo' className={classes.logo} />
+              </a>
             </Grid>
             <Grid item>
               <Typography variant='h3' className={classes.pageHeading}>

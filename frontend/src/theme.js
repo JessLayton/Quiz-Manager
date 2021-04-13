@@ -9,6 +9,14 @@ const theme = createMuiTheme({
       main: '#0d48d1',
     },
   },
+  typography: {
+    fontFamily: [
+      'Segoe UI',
+      'Roboto',
+      'Arial',
+      'sans-serif',
+    ].join(','),
+  },
 });
 
 export default theme;

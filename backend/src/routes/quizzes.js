@@ -7,14 +7,14 @@ const { editorAccess, viewingAccess } = require('../middleware/roles');
 router.post('/createQuiz', auth, editorAccess, async ({ user, body: { name, description, questions } }, res) => {
   try {
     if (!name || !description || !questions) {
-      return res.status(400).send({ msg: 'Fields cannot be empty' });
+      return res.status(400).json({ msg: 'Fields cannot be empty' });
     }
     if (questions.length === 0) {
-      return res.status(400).send({ msg: 'Quiz must have at least one question' });
+      return res.status(400).json({ msg: 'Quiz must have at least one question' });
     }
     const existingQuiz = await Quiz.findOne({ name });
     if (existingQuiz) {
-      res.status(409).send({ msg: `A quiz already exists with this name: ${name}` });
+      res.status(409).json({ msg: `A quiz already exists with this name: ${name}` });
     }
     const newQuiz = new Quiz({
       name,

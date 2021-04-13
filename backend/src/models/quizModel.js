@@ -22,7 +22,6 @@ const quizSchema = new mongoose.Schema({
   name: {
     type: String, required: true, maxLength: 50, unique: true,
   },
-  creator: { type: String },
   description: { type: String, required: true, maxLength: 100 },
   questions: { type: [questionSchema], required: true, minlength: 1 },
 });

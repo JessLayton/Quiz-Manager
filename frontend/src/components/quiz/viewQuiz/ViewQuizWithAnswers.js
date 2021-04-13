@@ -28,6 +28,7 @@ const ViewQuizzes = () => {
 
   const [quizData, setQuizData] = React.useState({});
   const [loading, isLoading] = React.useState(true);
+  const [showAnswers, setShowAnswers] = React.useState(false);
 
   const params = useParams();
 
@@ -51,6 +52,10 @@ const ViewQuizzes = () => {
     checkQuizData();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const toggleShowAnswers = () => {
+    setShowAnswers(!showAnswers);
+  };
 
   const goToHome = () => {
     history.push('/');
@@ -83,7 +88,11 @@ const ViewQuizzes = () => {
                     </Typography>
                     <ol>
                       {question.options.map((option, index) => (
-                        <Typography variant='body1' style={index === question.correctOption ? { backgroundColor: '#C8FFAB' } : { backgroundColor: 'white' }} key={option}>
+                        <Typography
+                          variant='body1'
+                          style={showAnswers && index === question.correctOption ? { backgroundColor: '#C8FFAB' } : { backgroundColor: 'white' }}
+                          key={option}
+                        >
                           <li type='A'>
                             {option}
                           </li>
@@ -93,6 +102,11 @@ const ViewQuizzes = () => {
                   </div>
                 ))}
               </ol>
+            </Grid>
+            <Grid item>
+              <Button onClick={toggleShowAnswers} variant='contained' color='secondary' size='small'>
+                {showAnswers ? 'Hide Answers' : 'Show Answers'}
+              </Button>
             </Grid>
             <Grid item>
               <Button onClick={goToHome} variant='contained' color='secondary' size='small'>

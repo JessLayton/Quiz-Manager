@@ -146,7 +146,7 @@ const QuizForm = ({
                         <RadioGroup value={question.correctOption} onChange={(event) => checkCorrectOption(event, index)}>
                           <Grid container direction='column' spacing={1}>
                             {question.options.map((option, optionIndex) => (
-                              <Grid item key={option}>
+                              <Grid item key={optionIndex}>
                                 <Option
                                   value={option}
                                   onChange={(event) => handleQuestionData(event, index)}

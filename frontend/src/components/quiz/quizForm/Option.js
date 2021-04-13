@@ -16,7 +16,7 @@ const Option = ({
       <TextField
         value={value}
         label={label}
-        name={`${optionIndex}`}
+        name={String(optionIndex)}
         onChange={onChange}
         type='text'
         InputLabelProps={{

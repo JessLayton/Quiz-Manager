@@ -10,7 +10,7 @@ import Register from '../components/auth/register/Register';
 import Login from '../components/auth/login/Login';
 import CreateQuiz from '../components/quiz/CreateQuiz';
 import UpdateQuiz from '../components/quiz/UpdateQuiz';
-import ViewQuiz from '../components/quiz/viewQuiz/ViewQuiz';
+import ViewQuizRestricted from '../components/quiz/viewQuiz/ViewQuizRestricted';
 import ViewQuizWithAnswers from '../components/quiz/viewQuiz/ViewQuizWithAnswers';
 import QuizTable from '../components/quiz/quizDash/QuizTable';
 
@@ -19,7 +19,7 @@ const Routes = () => (
   <Router>
     <Switch>
       <RestrictedRoute exact path='/' component={QuizTable} />
-      <RestrictedRoute path='/viewQuiz/:id' component={ViewQuiz} />
+      <RestrictedRoute path='/viewQuiz/:id' component={ViewQuizRestricted} />
       <EditorRoute path='/createQuiz' component={CreateQuiz} />
       <EditorRoute path='/updateQuiz/:id' component={UpdateQuiz} />
       <ViewerRoute path='/viewQuizWithAnswers/:id' component={ViewQuizWithAnswers} />

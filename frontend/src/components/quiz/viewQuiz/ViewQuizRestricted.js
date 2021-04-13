@@ -5,7 +5,7 @@ import Loading from '../../Loading';
 import ViewQuizList from './ViewQuizCard';
 import { getQuizNoAnswers } from '../../../connections/quizDatabaseService';
 
-const ViewQuizzes = () => {
+const ViewQuizRestricted = () => {
   const [quizData, setQuizData] = React.useState({});
   const [loading, isLoading] = React.useState(true);
 
@@ -46,4 +46,4 @@ const ViewQuizzes = () => {
   );
 };
 
-export default ViewQuizzes;
+export default ViewQuizRestricted;

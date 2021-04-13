@@ -47,14 +47,12 @@ router.post('/getQuizNoAnswers', auth, async (req, res) => {
   const { id } = req.body;
   try {
     Quiz.findById(id,
+      { 'questions.correctOption': 0 },
       (error, quiz) => {
         if (error) {
           res.status(500).json({ error });
         }
         if (quiz) {
-          quiz.questions.forEach((question) => {
-            question.correctOption = undefined;
-          });
           res.status(200).json({ quiz });
         } else {
           res.status(404).json({ msg: 'Quiz not found' });
@@ -74,6 +72,7 @@ router.post('/getQuizWithAnswers', auth, viewingAccess, async (req, res) => {
         res.status(500).json({ error });
       }
       if (quiz) {
+        console.log(quiz);
         res.status(200).json({ quiz });
       } else {
         res.status(404).json({ msg: 'Quiz not found' });

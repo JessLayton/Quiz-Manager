@@ -11,10 +11,10 @@ import {
   Divider,
   RadioGroup,
   FormControl,
-  Tooltip,
-  IconButton,
+  // Tooltip,
+  // IconButton,
 } from '@material-ui/core';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+// import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 import Option from './Option';
 
@@ -144,36 +144,27 @@ const QuizForm = ({
                       )
                         : null}
                     </Grid>
-                    <Grid item>
+                    <Grid container item direction='column' alignItems='flex-start' justify='center'>
                       <FormControl>
                         <RadioGroup value={question.correctOption} onChange={(event) => checkCorrectOption(event, index)}>
                           <Grid container direction='column' spacing={1}>
                             {question.options.map((option, optionIndex) => (
-                              <Grid item>
+                              <Grid item key={index + optionIndex}>
                                 <Option
                                   value={option}
                                   onChange={(event) => handleQuestionData(event, index)}
-                                  name={optionIndex}
+                                  optionIndex={optionIndex}
                                   label={`Option ${optionIndex + 1}`}
-                                  checked={optionIndex}
                                   correctOption={question.correctOption}
                                   size={question.options.length}
                                   removeOption={() => removeOption(index, optionIndex)}
+                                  addOption={() => addOption(index)}
                                 />
                               </Grid>
                             ))}
                           </Grid>
                         </RadioGroup>
                       </FormControl>
-                      <Grid item>
-                        {question.options.length < 5 ? (
-                          <Tooltip title='Add option' placement='right'>
-                            <IconButton color='secondary'>
-                              <AddCircleIcon onClick={() => addOption(index)} />
-                            </IconButton>
-                          </Tooltip>
-                        ) : null}
-                      </Grid>
                     </Grid>
                   </Grid>
                 ))}
@@ -206,15 +197,13 @@ QuizForm.propTypes = {
   removeQuestion: PropTypes.func.isRequired,
   addOption: PropTypes.func.isRequired,
   removeOption: PropTypes.func.isRequired,
-  name: PropTypes.string,
-  description: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   formType: PropTypes.string,
 };
 
 QuizForm.defaultProps = {
-  name: '',
-  description: '',
-  formType: 'Create Quiz',
+  formType: '',
 };
 
 export default QuizForm;

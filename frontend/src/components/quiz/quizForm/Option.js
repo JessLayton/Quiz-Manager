@@ -6,16 +6,17 @@ import {
 } from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 const Option = ({
-  value, label, name, onChange, checked, correctOption, removeOption, size,
+  value, label, optionIndex, onChange, correctOption, removeOption, addOption, size,
 }) => (
   <Grid container direction='row' alignItems='center' spacing={3}>
     <Grid item>
       <TextField
         value={value}
         label={label}
-        name={name}
+        name={`${optionIndex}`}
         onChange={onChange}
         type='text'
         InputLabelProps={{
@@ -28,15 +29,22 @@ const Option = ({
       />
     </Grid>
     <Grid item>
-      <Tooltip title={correctOption === checked ? 'Correct option' : 'Set as correct option'} placement='top-start'>
-        <FormControlLabel value={checked} control={<Radio checkedIcon={<CheckCircleIcon />} />} />
+      <Tooltip title={correctOption === optionIndex ? 'Correct option' : 'Set as correct option'} placement='top-start'>
+        <FormControlLabel value={optionIndex} control={<Radio checkedIcon={<CheckCircleIcon />} />} />
       </Tooltip>
     </Grid>
     <Grid item>
-      {size > 3 ? (
-        <Tooltip title='Remove option' placement='top-start'>
-          <IconButton color='secondary'>
-            <RemoveCircleIcon onClick={removeOption} />
+      <Tooltip title='Remove option' placement='top-start'>
+        <IconButton color='secondary' onClick={removeOption} disabled={size <= 3}>
+          <RemoveCircleIcon />
+        </IconButton>
+      </Tooltip>
+    </Grid>
+    <Grid item>
+      {size === (optionIndex + 1) ? (
+        <Tooltip title='Add option' placement='right'>
+          <IconButton color='secondary' onClick={addOption} disabled={size >= 5}>
+            <AddCircleIcon />
           </IconButton>
         </Tooltip>
       ) : null}
@@ -46,13 +54,13 @@ const Option = ({
 
 Option.propTypes = {
   value: PropTypes.string.isRequired,
-  label: PropTypes.string,
-  name: PropTypes.string.isRequired,
+  optionIndex: PropTypes.number.isRequired,
+  correctOption: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
-  checked: PropTypes.string.isRequired,
-  correctOption: PropTypes.string.isRequired,
   removeOption: PropTypes.func.isRequired,
+  addOption: PropTypes.func.isRequired,
   size: PropTypes.number.isRequired,
+  label: PropTypes.string,
 };
 
 Option.defaultProps = {

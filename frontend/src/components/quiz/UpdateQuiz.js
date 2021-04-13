@@ -16,7 +16,6 @@ const UpdateQuiz = () => {
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [questionData, setQuestionData] = React.useState([]);
-  const [correctOption, setCorrectOption] = React.useState([]);
   const [loading, isLoading] = React.useState(true);
 
   const handleSubmit = async (event) => {
@@ -35,27 +34,32 @@ const UpdateQuiz = () => {
     }
   };
 
-  const checkCorrectOption = (event, index) => {
-    const options = [...correctOption];
-    options[index] = event.target.value;
-    setCorrectOption(options);
-    const data = [...questionData];
-    data[index].correctOption = parseInt(event.target.value, 10);
-    setQuestionData(data);
-  };
-
   const addQuestion = () => {
-    setQuestionData([...questionData, { question: '', options: ['', '', '', ''], correctOption: 1 }]);
-    setCorrectOption([...correctOption, '1']);
+    setQuestionData([...questionData, { question: '', options: ['', '', '', ''], correctOption: 0 }]);
   };
 
   const removeQuestion = (index) => {
     const deletedQuestion = [...questionData];
     deletedQuestion.splice(index, 1);
     setQuestionData(deletedQuestion);
-    const deletedOption = [...correctOption];
-    deletedOption.splice(index, 1);
-    setCorrectOption(deletedOption);
+  };
+
+  const addOption = (questionIndex) => {
+    const data = [...questionData];
+    data[questionIndex].options = [...data[questionIndex].options, ''];
+    setQuestionData(data);
+  };
+
+  const removeOption = (questionIndex, optionIndex) => {
+    const data = [...questionData];
+    data[questionIndex].options.splice(optionIndex, 1);
+    setQuestionData(data);
+  };
+
+  const checkCorrectOption = (event, index) => {
+    const data = [...questionData];
+    data[index].correctOption = parseInt(event.target.value, 10);
+    setQuestionData(data);
   };
 
   const getQuizData = async () => {
@@ -68,13 +72,10 @@ const UpdateQuiz = () => {
         setName(quizData.name);
         setDescription(quizData.description);
         setQuestionData(quizData.questions);
-        const correctOptions = [];
-        const emptyAnswers = [];
-        quizData.questions.forEach((question) => {
-          emptyAnswers.push(null);
-          correctOptions.push(String(question.correctOption));
-        });
-        setCorrectOption(correctOptions);
+        // const emptyAnswers = [];
+        // quizData.questions.forEach(() => {
+        //   emptyAnswers.push(null);
+        // });
       }
     } catch (error) {
       console.error(error);
@@ -106,10 +107,11 @@ const UpdateQuiz = () => {
           updateQuizName={setName}
           description={description}
           updateQuizDescription={setDescription}
-          correctOption={correctOption}
           checkCorrectOption={checkCorrectOption}
           addQuestion={addQuestion}
           removeQuestion={removeQuestion}
+          addOption={addOption}
+          removeOption={removeOption}
           formType='Update Quiz'
         />
       </>

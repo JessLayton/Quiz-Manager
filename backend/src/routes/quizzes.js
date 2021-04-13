@@ -9,6 +9,9 @@ router.post('/createQuiz', auth, editorAccess, async ({ user, body: { name, desc
     if (!name || !description || !questions) {
       return res.status(400).send({ msg: 'Fields cannot be empty' });
     }
+    if (questions.length === 0) {
+      return res.status(400).send({ msg: 'Quiz must have at least one question' });
+    }
     const existingQuiz = await Quiz.findOne({ name });
     if (existingQuiz) {
       res.status(409).send({ msg: `A quiz already exists with this name: ${name}` });

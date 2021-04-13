@@ -81,11 +81,15 @@ const ViewQuizzes = () => {
                         {question.question}
                       </li>
                     </Typography>
-                    {question.options.map((option, index) => (
-                      <Typography variant='body1' style={index === question.correctOption ? { backgroundColor: '#C8FFAB' } : { backgroundColor: 'white' }} key={option}>
-                        {option}
-                      </Typography>
-                    ))}
+                    <ol>
+                      {question.options.map((option, index) => (
+                        <Typography variant='body1' style={index === question.correctOption ? { backgroundColor: '#C8FFAB' } : { backgroundColor: 'white' }} key={option}>
+                          <li type='A'>
+                            {option}
+                          </li>
+                        </Typography>
+                      ))}
+                    </ol>
                   </div>
                 ))}
               </ol>

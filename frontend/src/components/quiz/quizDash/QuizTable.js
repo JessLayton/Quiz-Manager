@@ -87,6 +87,7 @@ const QuizTable = () => {
       if (quizResponse) {
         getQuizData();
         setShowDeleteDialog(false);
+        setSelected();
       }
     } catch (error) {
       console.error(error);

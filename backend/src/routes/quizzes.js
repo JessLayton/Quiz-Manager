@@ -116,7 +116,7 @@ router.put('/updateQuiz/:id', auth, editorAccess, async (req, res) => {
         description,
         questions,
       },
-      { new: true }, // returns updated quiz
+      { new: true },
       (quizError) => {
         if (quizError) {
           return res.status(500).json({ err: quizError });

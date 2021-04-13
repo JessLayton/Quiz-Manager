@@ -9,7 +9,7 @@ import {
 
 import theme from '../theme';
 import { clearUser, selectRole } from './auth/userSlice';
-import logo from '../assets/logo-placeholder2.png';
+import logo from '../assets/logo-placeholder.png';
 
 const useStyles = makeStyles({
   navbarSpacer: {

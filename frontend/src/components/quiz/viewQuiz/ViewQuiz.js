@@ -81,11 +81,15 @@ const ViewQuizzes = () => {
                         {question.question}
                       </li>
                     </Typography>
-                    {question.options.map((option) => (
-                      <Typography key={option} variant='body1'>
-                        {option}
-                      </Typography>
-                    ))}
+                    <ol>
+                      {question.options.map((option) => (
+                        <Typography key={option} variant='body1'>
+                          <li type='A'>
+                            {option}
+                          </li>
+                        </Typography>
+                      ))}
+                    </ol>
                   </div>
                 ))}
               </ol>

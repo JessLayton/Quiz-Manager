@@ -12,9 +12,7 @@ import SearchField from './SearchField';
 import { selectRole } from '../../auth/userSlice';
 
 const useStyles = makeStyles((selected) => ({
-  highlight:
-      selected
-        ? { backgroundColor: '#E2F7F7' } : { },
+  highlight: selected ? { backgroundColor: '#E2F7F7' } : {},
 }));
 
 const TableToolbar = ({
@@ -50,35 +48,24 @@ const TableToolbar = ({
               <SearchField input={searchInput} updateInput={updateSearchInput} xs={3} />
             </Grid>
             <Grid item>
-              <Button onClick={goToViewQuiz} variant='contained' color='secondary' xs={3}>
+              <Button onClick={role === 'editor' || role === 'viewer' ? goToViewQuizWithAnswers : goToViewQuiz} variant='contained' color='secondary' xs={3}>
                 View Quiz
               </Button>
             </Grid>
-            {role === 'editor'
-              ? (
-                <>
-                  <Grid item>
-                    <Button onClick={goToUpdateQuiz} variant='contained' color='secondary' xs={3}>
-                      Update Quiz
-                    </Button>
-                  </Grid>
-                  <Grid item>
-                    <Button onClick={handleShowDeleteDialog} variant='contained' color='secondary' xs={3}>
-                      Delete Quiz
-                    </Button>
-                  </Grid>
-                </>
-              )
-              : null}
-            {role === 'editor' || role === 'viewer'
-              ? (
+            {role === 'editor' ? (
+              <>
                 <Grid item>
-                  <Button onClick={goToViewQuizWithAnswers} variant='contained' color='secondary' xs={3}>
-                    View Quiz With Answers
+                  <Button onClick={goToUpdateQuiz} variant='contained' color='secondary' xs={3}>
+                    Update Quiz
                   </Button>
                 </Grid>
-              )
-              : null}
+                <Grid item>
+                  <Button onClick={handleShowDeleteDialog} variant='contained' color='secondary' xs={3}>
+                    Delete Quiz
+                  </Button>
+                </Grid>
+              </>
+            ) : null}
           </Grid>
         ) : (
           <SearchField input={searchInput} updateInput={updateSearchInput} />
@@ -86,9 +73,7 @@ const TableToolbar = ({
       </Toolbar>
     );
   }
-  return (
-    <Loading />
-  );
+  return <Loading />;
 };
 
 TableToolbar.propTypes = {

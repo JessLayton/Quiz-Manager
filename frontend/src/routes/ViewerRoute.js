@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 import { selectRole } from '../components/auth/userSlice';
 
-const ViewAllRoute = ({ component: Component, path }) => {
+const ViewerRoute = ({ component: Component, path }) => {
   const role = useSelector(selectRole);
 
   return (
@@ -20,9 +20,9 @@ const ViewAllRoute = ({ component: Component, path }) => {
   );
 };
 
-ViewAllRoute.propTypes = {
+ViewerRoute.propTypes = {
   component: PropTypes.elementType.isRequired,
   path: PropTypes.string.isRequired,
 };
 
-export default ViewAllRoute;
+export default ViewerRoute;

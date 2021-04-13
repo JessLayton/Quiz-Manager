@@ -1,31 +1,11 @@
 import React, { useEffect } from 'react';
-import { useParams, Redirect, useHistory } from 'react-router-dom';
-
-import {
-  Card,
-  Grid,
-  Typography,
-  makeStyles,
-  Button,
-} from '@material-ui/core';
+import { useParams, Redirect } from 'react-router-dom';
 
 import Loading from '../../Loading';
-import Navbar from '../../NavBar';
+import ViewQuizList from './ViewQuizCard';
 import { getQuizWithAnswers } from '../../../connections/quizDatabaseService';
 
-const useStyles = makeStyles(() => ({
-  card: {
-    marginInline: '20%',
-    marginBottom: '20px',
-    paddingInline: '5%',
-    paddingBlock: '10px',
-  },
-}));
-
 const ViewQuizzes = () => {
-  const history = useHistory();
-  const classes = useStyles();
-
   const [quizData, setQuizData] = React.useState({});
   const [loading, isLoading] = React.useState(true);
   const [showAnswers, setShowAnswers] = React.useState(false);
@@ -57,65 +37,13 @@ const ViewQuizzes = () => {
     setShowAnswers(!showAnswers);
   };
 
-  const goToHome = () => {
-    history.push('/');
-  };
-
   if (loading) {
     return (
       <Loading />
     );
   } if (quizData) {
     return (
-      <>
-        <Navbar pageHeading='View Quiz' />
-        <Card className={classes.card}>
-          <Grid container direction='column' spacing={1}>
-            <Grid item>
-              <Typography variant='h4'>
-                {quizData.name}
-              </Typography>
-              <Typography variant='h6'>
-                {quizData.description}
-              </Typography>
-              <ol>
-                {quizData.questions.map((question) => (
-                  <div role='presentation' key={question._id}>
-                    <Typography variant='body1'>
-                      <li>
-                        {question.question}
-                      </li>
-                    </Typography>
-                    <ol>
-                      {question.options.map((option, index) => (
-                        <Typography
-                          variant='body1'
-                          style={showAnswers && index === question.correctOption ? { backgroundColor: '#C8FFAB' } : { backgroundColor: 'white' }}
-                          key={option}
-                        >
-                          <li type='A'>
-                            {option}
-                          </li>
-                        </Typography>
-                      ))}
-                    </ol>
-                  </div>
-                ))}
-              </ol>
-            </Grid>
-            <Grid item>
-              <Button onClick={toggleShowAnswers} variant='contained' color='secondary' size='small'>
-                {showAnswers ? 'Hide Answers' : 'Show Answers'}
-              </Button>
-            </Grid>
-            <Grid item>
-              <Button onClick={goToHome} variant='contained' color='secondary' size='small'>
-                Back to Quizzes
-              </Button>
-            </Grid>
-          </Grid>
-        </Card>
-      </>
+      <ViewQuizList quizData={quizData} showAnswers={showAnswers} toggleShowAnswers={toggleShowAnswers} />
     );
   }
   return (

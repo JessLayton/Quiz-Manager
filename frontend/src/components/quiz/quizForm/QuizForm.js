@@ -11,10 +11,7 @@ import {
   Divider,
   RadioGroup,
   FormControl,
-  // Tooltip,
-  // IconButton,
 } from '@material-ui/core';
-// import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 import Option from './Option';
 
@@ -149,7 +146,7 @@ const QuizForm = ({
                         <RadioGroup value={question.correctOption} onChange={(event) => checkCorrectOption(event, index)}>
                           <Grid container direction='column' spacing={1}>
                             {question.options.map((option, optionIndex) => (
-                              <Grid item key={index + optionIndex}>
+                              <Grid item key={option}>
                                 <Option
                                   value={option}
                                   onChange={(event) => handleQuestionData(event, index)}

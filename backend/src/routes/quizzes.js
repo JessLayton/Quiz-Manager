@@ -72,7 +72,6 @@ router.post('/getQuizWithAnswers', auth, viewingAccess, async (req, res) => {
         res.status(500).json({ error });
       }
       if (quiz) {
-        console.log(quiz);
         res.status(200).json({ quiz });
       } else {
         res.status(404).json({ msg: 'Quiz not found' });

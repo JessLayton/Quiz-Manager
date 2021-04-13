@@ -72,10 +72,6 @@ const UpdateQuiz = () => {
         setName(quizData.name);
         setDescription(quizData.description);
         setQuestionData(quizData.questions);
-        // const emptyAnswers = [];
-        // quizData.questions.forEach(() => {
-        //   emptyAnswers.push(null);
-        // });
       }
     } catch (error) {
       console.error(error);

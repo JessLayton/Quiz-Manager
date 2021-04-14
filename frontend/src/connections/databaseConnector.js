@@ -4,8 +4,10 @@ const getLocation = (path) => `http://localhost:5000${path}`;
 
 const post = async (path, body, headers = {}) => {
   const response = await Axios.post(getLocation(path), body, headers).catch((err) => {
-    console.error(err);
-    throw new Error(err.response.data.msg);
+    console.error(err.response);
+    if (err.response.status !== 500) {
+      throw new Error(err.response.data.msg);
+    }
   });
 
   return response;
@@ -24,7 +26,9 @@ const get = async (path, headers = {}) => {
 const put = async (path, body, headers) => {
   const response = await Axios.put(getLocation(path), body, headers).catch((err) => {
     console.error(err.response);
-    throw new Error(err.response.data.msg);
+    if (err.response.status !== 500) {
+      throw new Error(err.response.data.msg);
+    }
   });
   return response;
 };

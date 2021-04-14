@@ -112,6 +112,13 @@ router.put('/updateQuiz/:id', auth, editorAccess, async (req, res) => {
     if (!name || !description || !questions) {
       return res.status(400).json({ msg: 'Fields cannot be empty' });
     }
+    if (questions.length === 0) {
+      return res.status(400).json({ msg: 'Quiz must have at least one question' });
+    }
+    const existingQuiz = await Quiz.findOne({ name });
+    if (existingQuiz) {
+      res.status(409).json({ msg: `A quiz already exists with this name: ${name}` });
+    }
     Quiz.findOneAndUpdate({ _id: id },
       {
         name,

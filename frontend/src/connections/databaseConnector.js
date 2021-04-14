@@ -3,12 +3,11 @@ import Axios from 'axios';
 const getLocation = (path) => `http://localhost:5000${path}`;
 
 const post = async (path, body, headers = {}) => {
-  let response;
-  try {
-    response = await Axios.post(getLocation(path), body, headers);
-  } catch (err) {
+  const response = await Axios.post(getLocation(path), body, headers).catch((err) => {
     console.error(err);
-  }
+    throw new Error(err.response.data.msg);
+  });
+
   return response;
 };
 

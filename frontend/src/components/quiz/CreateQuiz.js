@@ -19,7 +19,7 @@ const CreateQuiz = () => {
     event.preventDefault();
     try {
       const createQuiz = await createNewQuiz(name, description, questionData);
-      if (createQuiz) {
+      if (createQuiz && createQuiz.data && createQuiz.data.quiz) {
         dispatch(showSuccess(`Created quiz: ${name}`));
         history.push('/');
       } else {
@@ -27,7 +27,7 @@ const CreateQuiz = () => {
       }
     } catch (error) {
       console.error(error);
-      dispatch(showError('Failed to create quiz B'));
+      dispatch(showError(error.message));
     }
   };
 

@@ -45,7 +45,7 @@ const createNewQuiz = async (name, description, questions) => {
   try {
     response = await post('/quizzes/createQuiz', quizData, getHeaders());
   } catch (err) {
-    console.error(err);
+    throw new Error(err.message);
   }
   return response;
 };

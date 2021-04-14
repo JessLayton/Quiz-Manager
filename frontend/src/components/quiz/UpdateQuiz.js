@@ -27,6 +27,8 @@ const UpdateQuiz = () => {
       if (updatedQuiz) {
         dispatch(showSuccess(`Updated quiz: ${name}`));
         history.push('/');
+      } else {
+        dispatch(showError('Failed to update quiz'));
       }
     } catch (error) {
       console.error(error);

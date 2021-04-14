@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
 import {
   makeStyles, Paper, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, TablePagination, Typography,
 } from '@material-ui/core';
@@ -7,6 +9,7 @@ import TableToolbar from './TableToolbar';
 import NavBar from '../../NavBar';
 import { getAllQuizzes, deleteQuiz } from '../../../connections/quizDatabaseService';
 import DeleteDialog from './DeleteDialog';
+import { showSuccess, showError } from '../../notifier/notifierSlice';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -22,6 +25,7 @@ const useStyles = makeStyles(() => ({
 
 const QuizTable = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -81,15 +85,19 @@ const QuizTable = () => {
 
   const removeQuiz = async () => {
     const quizId = selected.id;
-    let quizResponse;
+    let deleteResponse;
     try {
-      quizResponse = await deleteQuiz(quizId);
-      if (quizResponse) {
+      deleteResponse = await deleteQuiz(quizId);
+      if (deleteResponse) {
         getQuizData();
         setShowDeleteDialog(false);
         setSelected();
+        dispatch(showSuccess('Deleted quiz'));
+      } else {
+        dispatch(showError('Failed to delete quiz'));
       }
     } catch (error) {
+      dispatch(showError(error.message));
       console.error(error);
     }
   };

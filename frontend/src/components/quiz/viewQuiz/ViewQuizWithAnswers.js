@@ -8,16 +8,21 @@ import { getQuizWithAnswers } from '../../../connections/quizDatabaseService';
 const ViewQuizzes = () => {
   const [quizData, setQuizData] = React.useState({});
   const [loading, isLoading] = React.useState(true);
-  const [showAnswers, setShowAnswers] = React.useState(false);
+  const [showAnswers, setShowAnswers] = React.useState([]);
 
   const params = useParams();
 
   const getQuizData = async () => {
     const quizId = params.id;
+    const showAnswersArr = [];
     try {
       const quizResponse = await getQuizWithAnswers(quizId);
       if (quizResponse && quizResponse.data) {
         setQuizData(quizResponse.data.quiz);
+        quizResponse.data.quiz.questions.forEach(() => {
+          showAnswersArr.push(false);
+        });
+        setShowAnswers(showAnswersArr);
       }
     } catch (error) {
       console.error(error);
@@ -33,8 +38,10 @@ const ViewQuizzes = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const toggleShowAnswers = () => {
-    setShowAnswers(!showAnswers);
+  const toggleShowAnswer = (questionIndex) => {
+    const showAnswersArr = [...showAnswers];
+    showAnswersArr[questionIndex] = !showAnswersArr[questionIndex];
+    setShowAnswers(showAnswersArr);
   };
 
   if (loading) {
@@ -43,7 +50,7 @@ const ViewQuizzes = () => {
     );
   } if (quizData) {
     return (
-      <ViewQuizList quizData={quizData} showAnswers={showAnswers} toggleShowAnswers={toggleShowAnswers} />
+      <ViewQuizList quizData={quizData} showAnswers={showAnswers} toggleShowAnswer={toggleShowAnswer} />
     );
   }
   return (

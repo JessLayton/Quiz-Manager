@@ -26,7 +26,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ViewQuizListCard = ({
-  quizData, showAnswers, toggleShowAnswers,
+  quizData, showAnswers, toggleShowAnswer,
 }) => {
   const history = useHistory();
   const classes = useStyles();
@@ -50,21 +50,31 @@ const ViewQuizListCard = ({
               {quizData.description}
             </Typography>
             <ol>
-              {quizData.questions.map((question) => (
+              {quizData.questions.map((question, questionIndex) => (
                 <div role='presentation' key={question._id}>
-                  <Typography variant='body1'>
-                    <li>
-                      {question.question}
-                    </li>
-                  </Typography>
+                  <Grid container direction='row' justify='space-between' alignItems='center' spacing={1}>
+                    <Grid>
+                      <Typography variant='body1'>
+                        <li>
+                          {question.question}
+                        </li>
+                      </Typography>
+                    </Grid>
+                    {role === 'editor' || role === 'viewer' ? (
+                      <Grid item>
+                        <Button onClick={() => toggleShowAnswer(questionIndex)} color='secondary' size='small'>
+                          {showAnswers[questionIndex] ? 'Hide Answer' : 'Show Answer'}
+                        </Button>
+                      </Grid>
+                    ) : null}
+                  </Grid>
                   <ol>
-                    {question.options.map((option, index) => (
+                    {question.options.map((option, optionIndex) => (
                       <Typography
                         key={option}
                         variant='body1'
-                        style={showAnswers && index === question.correctOption ? { backgroundColor: '#C8FFAB' } : { backgroundColor: 'white' }}
                       >
-                        <li type='A'>
+                        <li type='A' style={showAnswers[questionIndex] && optionIndex === question.correctOption ? { backgroundColor: '#C8FFAB' } : { backgroundColor: 'white' }}>
                           {option}
                         </li>
                       </Typography>
@@ -74,13 +84,6 @@ const ViewQuizListCard = ({
               ))}
             </ol>
           </Grid>
-          {role === 'editor' || role === 'viewer' ? (
-            <Grid item>
-              <Button onClick={toggleShowAnswers} variant='contained' color='secondary' size='small'>
-                {showAnswers ? 'Hide Answers' : 'Show Answers'}
-              </Button>
-            </Grid>
-          ) : null}
           <Grid item>
             <Button onClick={goToHome} variant='contained' color='secondary' size='small'>
               Back to Quizzes
@@ -101,13 +104,8 @@ ViewQuizListCard.propTypes = {
       options: PropTypes.arrayOf(PropTypes.string),
     })),
   }).isRequired,
-  showAnswers: PropTypes.bool,
-  toggleShowAnswers: PropTypes.func,
-};
-
-ViewQuizListCard.defaultProps = {
-  showAnswers: false,
-  toggleShowAnswers: null,
+  showAnswers: PropTypes.arrayOf(PropTypes.bool).isRequired,
+  toggleShowAnswer: PropTypes.func.isRequired,
 };
 
 export default ViewQuizListCard;

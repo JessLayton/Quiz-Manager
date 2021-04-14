@@ -1,6 +1,6 @@
 {
-  "short_name": "Quiz App",
-  "name": "Synoptic Project Quiz App",
+  "short_name": "Quiz Manager",
+  "name": "Synoptic Project Quiz Manager",
   "icons": [],
   "start_url": ".",
   "display": "standalone",

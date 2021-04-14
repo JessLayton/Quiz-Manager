@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ViewQuizListCard = ({
+const ViewQuizCard = ({
   quizData, showAnswers, toggleShowAnswer,
 }) => {
   const history = useHistory();
@@ -74,7 +74,11 @@ const ViewQuizListCard = ({
                         key={option}
                         variant='body1'
                       >
-                        <li type='A' style={showAnswers[questionIndex] && optionIndex === question.correctOption ? { backgroundColor: '#C8FFAB' } : { backgroundColor: 'white' }}>
+                        <li
+                          type='A'
+                          style={(role === 'editor' || role === 'viewer')
+                          && showAnswers[questionIndex] && optionIndex === question.correctOption ? { backgroundColor: '#C8FFAB' } : { backgroundColor: 'white' }}
+                        >
                           {option}
                         </li>
                       </Typography>
@@ -95,7 +99,7 @@ const ViewQuizListCard = ({
   );
 };
 
-ViewQuizListCard.propTypes = {
+ViewQuizCard.propTypes = {
   quizData: PropTypes.shape({
     name: PropTypes.string,
     description: PropTypes.string,
@@ -104,8 +108,13 @@ ViewQuizListCard.propTypes = {
       options: PropTypes.arrayOf(PropTypes.string),
     })),
   }).isRequired,
-  showAnswers: PropTypes.arrayOf(PropTypes.bool).isRequired,
-  toggleShowAnswer: PropTypes.func.isRequired,
+  showAnswers: PropTypes.arrayOf(PropTypes.bool),
+  toggleShowAnswer: PropTypes.func,
 };
 
-export default ViewQuizListCard;
+ViewQuizCard.defaultProps = {
+  showAnswers: [],
+  toggleShowAnswer: null,
+};
+
+export default ViewQuizCard;

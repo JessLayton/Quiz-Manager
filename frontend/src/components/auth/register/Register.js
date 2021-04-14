@@ -53,7 +53,8 @@ const Register = () => {
         dispatch(showError('Failed to register - please fill in all fields correctly'));
       }
     } catch (error) {
-      dispatch(showError('Failed to register'));
+      console.error(error);
+      dispatch(showError(error.message));
     }
   };
 

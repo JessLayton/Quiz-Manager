@@ -33,7 +33,6 @@ const UsernameField = ({ value, onValueChange }) => {
           endAdornment: (
             <InputAdornment position='end'>
               <Person
-                // edge='end'
                 className={classes.icon}
               />
             </InputAdornment>

@@ -50,7 +50,8 @@ const Login = () => {
         dispatch(showError('Failed to login'));
       }
     } catch (error) {
-      dispatch(showError('Error with login'));
+      console.error(error);
+      dispatch(showError(error.message));
     }
   };
 

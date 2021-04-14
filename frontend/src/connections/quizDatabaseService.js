@@ -70,7 +70,7 @@ const updateQuiz = async (id, name, description, questions) => {
   try {
     response = await put(`/quizzes/updateQuiz/${id}`, quizData, getHeaders());
   } catch (err) {
-    console.error(err);
+    throw new Error(err.message);
   }
   return response;
 };

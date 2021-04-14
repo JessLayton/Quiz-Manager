@@ -12,15 +12,20 @@ router.post('/register', async (req, res) => {
       email, password, confirmPassword, username,
     } = req.body;
     if (!email || !username || !password || !confirmPassword) {
-      return res.status(400).json({ msg: 'Fields cannot be empty.' });
-    } if (!passwordCheck.test(password)) {
-      return res.status(400).json({ msg: 'The password does not meet the criteria.' });
-    } if (password !== confirmPassword) {
-      return res.status(400).json({ msg: 'Passwords do not match.' });
+      return res.status(400).json({ msg: 'Fields cannot be empty' });
     }
-    const existingUser = await User.findOne({ email });
+    const existingEmail = await User.findOne({ email });
+    if (existingEmail) {
+      return res.status(400).json({ msg: 'An account with this email already exists' });
+    }
+    const existingUser = await User.findOne({ username });
     if (existingUser) {
-      return res.status(400).json({ msg: 'An account with this email already exists.' });
+      return res.status(400).json({ msg: 'An account with this username already exists' });
+    }
+    if (!passwordCheck.test(password)) {
+      return res.status(400).json({ msg: 'The password does not meet the criteria' });
+    } if (password !== confirmPassword) {
+      return res.status(400).json({ msg: 'Passwords do not match' });
     }
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
@@ -53,19 +58,19 @@ router.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
     if (!username || !password) {
-      return res.status(400).json({ msg: 'Fields cannot be empty.' });
+      return res.status(400).json({ msg: 'Fields cannot be empty' });
     }
     const user = await User.findOne({ username });
     if (!user) {
       return res
         .status(400)
-        .json({ msg: 'No account with this username has been registered.' });
+        .json({ msg: 'No account with this username has been registered' });
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ msg: 'Invalid credentials.' });
+      return res.status(400).json({ msg: 'Incorrect password' });
     }
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '900s' });
     return res.json({
       token,
       user: {

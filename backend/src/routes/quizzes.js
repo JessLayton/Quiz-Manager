@@ -14,7 +14,7 @@ router.post('/createQuiz', auth, editorAccess, async ({ user, body: { name, desc
     }
     const existingQuiz = await Quiz.findOne({ name });
     if (existingQuiz) {
-      res.status(409).json({ msg: `A quiz already exists with this name: ${name}` });
+      return res.status(409).json({ msg: `A quiz already exists with this name: ${name}` });
     }
     const newQuiz = new Quiz({
       name,
@@ -33,7 +33,7 @@ router.post('/createQuiz', auth, editorAccess, async ({ user, body: { name, desc
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: error.message });
+    return res.status(500).json({ msg: error.message });
   }
 });
 
@@ -42,7 +42,7 @@ router.get('/getAllQuizzes', auth, async (req, res) => {
     Quiz.find({}, (err, quizzes) => res.status(200).json({ quizzes }));
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ err: error });
+    return res.status(500).json({ msg: error.message });
   }
 });
 
@@ -53,13 +53,12 @@ router.post('/getQuizNoAnswers', auth, async (req, res) => {
       { 'questions.correctOption': 0 },
       (error, quiz) => {
         if (error) {
-          res.status(500).json({ error });
+          return res.status(500).json({ msg: error.message });
         }
         if (quiz) {
-          res.status(200).json({ quiz });
-        } else {
-          res.status(404).json({ msg: 'Quiz not found' });
+          return res.status(200).json({ quiz });
         }
+        return res.status(404).json({ msg: 'Quiz not found' });
       });
   } catch (error) {
     console.error(error);
@@ -72,17 +71,16 @@ router.post('/getQuizWithAnswers', auth, viewingAccess, async (req, res) => {
   try {
     Quiz.findById(id, (error, quiz) => {
       if (error) {
-        res.status(500).json({ error });
+        return res.status(500).json({ msg: error.message });
       }
       if (quiz) {
-        res.status(200).json({ quiz });
-      } else {
-        res.status(404).json({ msg: 'Quiz not found' });
+        return res.status(200).json({ quiz });
       }
+      return res.status(404).json({ msg: 'Quiz not found' });
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ err: error });
+    res.status(500).json({ msg: error.message });
   }
 });
 
@@ -91,13 +89,13 @@ router.delete('/deleteQuiz/:id', auth, editorAccess, async (req, res) => {
   try {
     await Quiz.deleteOne({ _id: id }, (error, quizResponse) => {
       if (error) {
-        return res.status(500).json({ err: error });
+        return res.status(500).json({ msg: error.message });
       }
       return res.status(200).json({ response: quizResponse });
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ err: error });
+    return res.status(500).json({ msg: error.message });
   }
 });
 
@@ -116,8 +114,8 @@ router.put('/updateQuiz/:id', auth, editorAccess, async (req, res) => {
       return res.status(400).json({ msg: 'Quiz must have at least one question' });
     }
     const existingQuiz = await Quiz.findOne({ name });
-    if (existingQuiz) {
-      res.status(409).json({ msg: `A quiz already exists with this name: ${name}` });
+    if (existingQuiz && existingQuiz._id.toString() !== id) {
+      return res.status(409).json({ msg: `A quiz already exists with this name: ${name}` });
     }
     Quiz.findOneAndUpdate({ _id: id },
       {
@@ -128,9 +126,9 @@ router.put('/updateQuiz/:id', auth, editorAccess, async (req, res) => {
       { new: true },
       (quizError) => {
         if (quizError) {
-          return res.status(500).json({ err: quizError });
+          return res.status(500).json({ msg: quizError.message });
         }
-        return res.status(200).json({
+        res.status(200).json({
           quiz: {
             name,
             description,
@@ -140,7 +138,7 @@ router.put('/updateQuiz/:id', auth, editorAccess, async (req, res) => {
       });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: err.message });
+    res.status(500).json({ msg: err.message });
   }
 });
 

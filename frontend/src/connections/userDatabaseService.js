@@ -9,7 +9,7 @@ const register = async (email, username, password, confirmPassword) => {
   try {
     response = await post('/users/register', newUserData);
   } catch (err) {
-    console.error(err);
+    throw new Error(err.message);
   }
   return response;
 };
@@ -20,7 +20,7 @@ const login = async (username, password) => {
   try {
     response = await post('/users/login', loginData);
   } catch (err) {
-    console.error(err);
+    throw new Error(err.message);
   }
   return response;
 };

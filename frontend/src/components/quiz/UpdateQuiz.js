@@ -32,7 +32,7 @@ const UpdateQuiz = () => {
       }
     } catch (error) {
       console.error(error);
-      dispatch(showError('Failed to update quiz'));
+      dispatch(showError(error.message));
     }
   };
 

@@ -92,7 +92,7 @@ const QuizTable = () => {
         getQuizData();
         setShowDeleteDialog(false);
         setSelected();
-        dispatch(showSuccess('Deleted quiz'));
+        dispatch(showSuccess(`Deleted quiz: ${selected.quizName}`));
       } else {
         dispatch(showError('Failed to delete quiz'));
       }

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useParams, useHistory, Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import NavBar from '../NavBar';
 import { updateQuiz, getQuizWithAnswers } from '../../connections/quizDatabaseService';
 import QuizForm from './quizForm/QuizForm';
 import Loading from '../Loading';
@@ -95,24 +94,21 @@ const UpdateQuiz = () => {
     );
   } if (name && description) {
     return (
-      <>
-        <NavBar pageHeading='Update Quiz' />
-        <QuizForm
-          handleSubmit={handleSubmit}
-          questionData={questionData}
-          setQuestionData={setQuestionData}
-          name={name}
-          updateQuizName={setName}
-          description={description}
-          updateQuizDescription={setDescription}
-          checkCorrectOption={checkCorrectOption}
-          addQuestion={addQuestion}
-          removeQuestion={removeQuestion}
-          addOption={addOption}
-          removeOption={removeOption}
-          formType='Update Quiz'
-        />
-      </>
+      <QuizForm
+        handleSubmit={handleSubmit}
+        questionData={questionData}
+        setQuestionData={setQuestionData}
+        name={name}
+        updateQuizName={setName}
+        description={description}
+        updateQuizDescription={setDescription}
+        checkCorrectOption={checkCorrectOption}
+        addQuestion={addQuestion}
+        removeQuestion={removeQuestion}
+        addOption={addOption}
+        removeOption={removeOption}
+        formType='Update Quiz'
+      />
     );
   }
   return (

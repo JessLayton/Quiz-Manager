@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core';
 
 import Option from './Option';
+import Navbar from '../../NavBar';
 
 const useStyles = makeStyles(() => ({
   quizCard: {
@@ -72,111 +73,114 @@ const QuizForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Card className={classes.quizCard}>
-        <Grid container justify='center' alignItems='center'>
-          <Grid container spacing={2} direction='column'>
-            <Grid item>
-              <TextField
-                value={name}
-                onChange={handleUpdateName}
-                type='text'
-                label='Quiz Name'
-                InputLabelProps={{
-                  shrink: true,
-                  required: false,
-                }}
-                variant='filled'
-                maxLength='50'
-                fullWidth
-                required
-              />
-            </Grid>
-            <Grid item>
-              <TextField
-                value={description}
-                onChange={handleUpdateDescription}
-                type='text'
-                label='Quiz Description'
-                InputLabelProps={{
-                  shrink: true,
-                  required: false,
-                }}
-                variant='filled'
-                maxLength='150'
-                fullWidth
-                required
-              />
-            </Grid>
-            <Card className={classes.questionCard}>
-              <Grid container item direction='column' spacing={3}>
-                {questionData.map((question, index) => (
-                  <Grid container item direction='column' spacing={2} key={index}>
-                    <Divider />
-                    <Grid container item direction='row' alignItems='center' justify='space-between' spacing={2}>
-                      <Grid item xs={10}>
-                        <TextField
-                          className={classes.question}
-                          value={question.question}
-                          onChange={(event) => handleQuestionData(event, index)}
-                          type='text'
-                          label={`Question ${index + 1}`}
-                          name='question'
-                          InputLabelProps={{
-                            shrink: true,
-                            required: false,
-                          }}
-                          variant='filled'
-                          maxLength='80'
-                          fullWidth
-                          required
-                        />
-                      </Grid>
-                      {questionData.length > 1 ? (
-                        <Grid item xs={2}>
-                          <Button onClick={() => removeQuestion(index)} variant='contained' color='secondary' size='small'>
-                            Remove Question
-                          </Button>
-                        </Grid>
-                      )
-                        : null}
-                    </Grid>
-                    <Grid container item direction='column' alignItems='flex-start' justify='center'>
-                      <FormControl>
-                        <RadioGroup value={question.correctOption} onChange={(event) => checkCorrectOption(event, index)}>
-                          <Grid container direction='column' spacing={1}>
-                            {question.options.map((option, optionIndex) => (
-                              <Grid item key={optionIndex}>
-                                <Option
-                                  value={option}
-                                  onChange={(event) => handleQuestionData(event, index)}
-                                  optionIndex={optionIndex}
-                                  label={`Option ${optionIndex + 1}`}
-                                  correctOption={question.correctOption}
-                                  size={question.options.length}
-                                  removeOption={() => removeOption(index, optionIndex)}
-                                  addOption={() => addOption(index)}
-                                />
-                              </Grid>
-                            ))}
-                          </Grid>
-                        </RadioGroup>
-                      </FormControl>
-                    </Grid>
-                  </Grid>
-                ))}
-                <Grid item>
-                  <Button onClick={addQuestion} variant='contained' color='secondary' size='small'>Add Question</Button>
-                </Grid>
+    <>
+      <Navbar pageHeading={formType} />
+      <form onSubmit={handleSubmit}>
+        <Card className={classes.quizCard}>
+          <Grid container justify='center' alignItems='center'>
+            <Grid container spacing={2} direction='column'>
+              <Grid item>
+                <TextField
+                  value={name}
+                  onChange={handleUpdateName}
+                  type='text'
+                  label='Quiz Name'
+                  InputLabelProps={{
+                    shrink: true,
+                    required: false,
+                  }}
+                  variant='filled'
+                  maxLength='50'
+                  fullWidth
+                  required
+                />
               </Grid>
-            </Card>
-            <Grid container item>
-              <Button type='submit' variant='contained' color='secondary' size='large'>{formType}</Button>
+              <Grid item>
+                <TextField
+                  value={description}
+                  onChange={handleUpdateDescription}
+                  type='text'
+                  label='Quiz Description'
+                  InputLabelProps={{
+                    shrink: true,
+                    required: false,
+                  }}
+                  variant='filled'
+                  maxLength='150'
+                  fullWidth
+                  required
+                />
+              </Grid>
+              <Card className={classes.questionCard}>
+                <Grid container item direction='column' spacing={3}>
+                  {questionData.map((question, index) => (
+                    <Grid container item direction='column' spacing={2} key={index}>
+                      <Divider />
+                      <Grid container item direction='row' alignItems='center' justify='space-between' spacing={2}>
+                        <Grid item xs={10}>
+                          <TextField
+                            className={classes.question}
+                            value={question.question}
+                            onChange={(event) => handleQuestionData(event, index)}
+                            type='text'
+                            label={`Question ${index + 1}`}
+                            name='question'
+                            InputLabelProps={{
+                              shrink: true,
+                              required: false,
+                            }}
+                            variant='filled'
+                            maxLength='80'
+                            fullWidth
+                            required
+                          />
+                        </Grid>
+                        {questionData.length > 1 ? (
+                          <Grid item xs={2}>
+                            <Button onClick={() => removeQuestion(index)} variant='contained' color='secondary' size='small'>
+                              Remove Question
+                            </Button>
+                          </Grid>
+                        )
+                          : null}
+                      </Grid>
+                      <Grid container item direction='column' alignItems='flex-start' justify='center'>
+                        <FormControl>
+                          <RadioGroup value={question.correctOption} onChange={(event) => checkCorrectOption(event, index)}>
+                            <Grid container direction='column' spacing={1}>
+                              {question.options.map((option, optionIndex) => (
+                                <Grid item key={optionIndex}>
+                                  <Option
+                                    value={option}
+                                    onChange={(event) => handleQuestionData(event, index)}
+                                    optionIndex={optionIndex}
+                                    label={`Option ${optionIndex + 1}`}
+                                    correctOption={question.correctOption}
+                                    size={question.options.length}
+                                    removeOption={() => removeOption(index, optionIndex)}
+                                    addOption={() => addOption(index)}
+                                  />
+                                </Grid>
+                              ))}
+                            </Grid>
+                          </RadioGroup>
+                        </FormControl>
+                      </Grid>
+                    </Grid>
+                  ))}
+                  <Grid item>
+                    <Button onClick={addQuestion} variant='contained' color='secondary' size='small'>Add Question</Button>
+                  </Grid>
+                </Grid>
+              </Card>
+              <Grid container item>
+                <Button type='submit' variant='contained' color='secondary' size='large'>{formType}</Button>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-      </Card>
-    </form>
+        </Card>
+      </form>
+    </>
   );
 };
 
@@ -200,7 +204,7 @@ QuizForm.propTypes = {
 };
 
 QuizForm.defaultProps = {
-  formType: '',
+  formType: 'Create Quiz',
 };
 
 export default QuizForm;

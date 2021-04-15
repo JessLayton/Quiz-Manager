@@ -2,7 +2,6 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import NavBar from '../NavBar';
 import QuizForm from './quizForm/QuizForm';
 import { createNewQuiz } from '../../connections/quizDatabaseService';
 import { showSuccess, showError } from '../notifier/notifierSlice';
@@ -60,24 +59,20 @@ const CreateQuiz = () => {
   };
 
   return (
-    <>
-      <NavBar pageHeading='Create Quiz' />
-      <QuizForm
-        handleSubmit={handleSubmit}
-        questionData={questionData}
-        setQuestionData={setQuestionData}
-        name={name}
-        updateQuizName={setName}
-        description={description}
-        updateQuizDescription={setDescription}
-        checkCorrectOption={checkCorrectOption}
-        addQuestion={addQuestion}
-        removeQuestion={removeQuestion}
-        addOption={addOption}
-        removeOption={removeOption}
-        formType='Create Quiz'
-      />
-    </>
+    <QuizForm
+      handleSubmit={handleSubmit}
+      questionData={questionData}
+      setQuestionData={setQuestionData}
+      name={name}
+      updateQuizName={setName}
+      description={description}
+      updateQuizDescription={setDescription}
+      checkCorrectOption={checkCorrectOption}
+      addQuestion={addQuestion}
+      removeQuestion={removeQuestion}
+      addOption={addOption}
+      removeOption={removeOption}
+    />
   );
 };
 

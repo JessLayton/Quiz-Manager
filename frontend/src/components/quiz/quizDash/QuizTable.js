@@ -7,8 +7,8 @@ import {
 
 import TableToolbar from './TableToolbar';
 import NavBar from '../../NavBar';
-import { getAllQuizzes, deleteQuiz } from '../../../connections/quizDatabaseService';
 import DeleteDialog from './DeleteDialog';
+import { getAllQuizzes, deleteQuiz } from '../../../connections/quizDatabaseService';
 import { showSuccess, showError } from '../../notifier/notifierSlice';
 
 const useStyles = makeStyles(() => ({

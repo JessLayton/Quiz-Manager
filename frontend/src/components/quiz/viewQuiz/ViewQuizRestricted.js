@@ -6,10 +6,10 @@ import ViewQuizList from './ViewQuizCard';
 import { getQuizNoAnswers } from '../../../connections/quizDatabaseService';
 
 const ViewQuizRestricted = () => {
+  const params = useParams();
+
   const [quizData, setQuizData] = React.useState({});
   const [loading, isLoading] = React.useState(true);
-
-  const params = useParams();
 
   const getQuizData = async () => {
     const quizId = params.id;

@@ -33,7 +33,7 @@ const useStyles = makeStyles(() => ({
 
 const QuizForm = ({
   handleSubmit, questionData, setQuestionData, updateQuizName, updateQuizDescription,
-  checkCorrectOption, addOption, removeOption, name, description, formType,
+  checkCorrectOption, name, description, formType,
 }) => {
   const classes = useStyles();
 
@@ -80,6 +80,18 @@ const QuizForm = ({
     const deletedQuestion = [...questionData];
     deletedQuestion.splice(index, 1);
     setQuestionData(deletedQuestion);
+  };
+
+  const addOption = (questionIndex) => {
+    const data = [...questionData];
+    data[questionIndex].options = [...data[questionIndex].options, ''];
+    setQuestionData(data);
+  };
+
+  const removeOption = (questionIndex, optionIndex) => {
+    const data = [...questionData];
+    data[questionIndex].options.splice(optionIndex, 1);
+    setQuestionData(data);
   };
 
   return (
@@ -204,8 +216,6 @@ QuizForm.propTypes = {
   updateQuizName: PropTypes.func.isRequired,
   updateQuizDescription: PropTypes.func.isRequired,
   checkCorrectOption: PropTypes.func.isRequired,
-  addOption: PropTypes.func.isRequired,
-  removeOption: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   formType: PropTypes.string,

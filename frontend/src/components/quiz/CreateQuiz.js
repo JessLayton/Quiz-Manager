@@ -30,18 +30,6 @@ const CreateQuiz = () => {
     }
   };
 
-  const addOption = (questionIndex) => {
-    const data = [...questionData];
-    data[questionIndex].options = [...data[questionIndex].options, ''];
-    setQuestionData(data);
-  };
-
-  const removeOption = (questionIndex, optionIndex) => {
-    const data = [...questionData];
-    data[questionIndex].options.splice(optionIndex, 1);
-    setQuestionData(data);
-  };
-
   const checkCorrectOption = (event, index) => {
     const data = [...questionData];
     data[index].correctOption = parseInt(event.target.value, 10);
@@ -58,8 +46,6 @@ const CreateQuiz = () => {
       description={description}
       updateQuizDescription={setDescription}
       checkCorrectOption={checkCorrectOption}
-      addOption={addOption}
-      removeOption={removeOption}
     />
   );
 };

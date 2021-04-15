@@ -17,42 +17,6 @@ const UpdateQuiz = () => {
   const [questionData, setQuestionData] = React.useState([]);
   const [loading, isLoading] = React.useState(true);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const quizId = params.id;
-    let updatedQuiz;
-    try {
-      updatedQuiz = await updateQuiz(quizId, name, description, questionData);
-      if (updatedQuiz) {
-        dispatch(showSuccess(`Updated quiz: ${name}`));
-        history.push('/');
-      } else {
-        dispatch(showError('Failed to update quiz'));
-      }
-    } catch (error) {
-      console.error(error);
-      dispatch(showError(error.message));
-    }
-  };
-
-  const addOption = (questionIndex) => {
-    const data = [...questionData];
-    data[questionIndex].options = [...data[questionIndex].options, ''];
-    setQuestionData(data);
-  };
-
-  const removeOption = (questionIndex, optionIndex) => {
-    const data = [...questionData];
-    data[questionIndex].options.splice(optionIndex, 1);
-    setQuestionData(data);
-  };
-
-  const checkCorrectOption = (event, index) => {
-    const data = [...questionData];
-    data[index].correctOption = parseInt(event.target.value, 10);
-    setQuestionData(data);
-  };
-
   const getQuizData = async () => {
     const quizId = params.id;
     let quizResponse;
@@ -78,6 +42,30 @@ const UpdateQuiz = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const quizId = params.id;
+    let updatedQuiz;
+    try {
+      updatedQuiz = await updateQuiz(quizId, name, description, questionData);
+      if (updatedQuiz) {
+        dispatch(showSuccess(`Updated quiz: ${name}`));
+        history.push('/');
+      } else {
+        dispatch(showError('Failed to update quiz'));
+      }
+    } catch (error) {
+      console.error(error);
+      dispatch(showError(error.message));
+    }
+  };
+
+  const checkCorrectOption = (event, index) => {
+    const data = [...questionData];
+    data[index].correctOption = parseInt(event.target.value, 10);
+    setQuestionData(data);
+  };
+
   if (loading) {
     return (
       <Loading />
@@ -93,8 +81,6 @@ const UpdateQuiz = () => {
         description={description}
         updateQuizDescription={setDescription}
         checkCorrectOption={checkCorrectOption}
-        addOption={addOption}
-        removeOption={removeOption}
         formType='Update Quiz'
       />
     );

@@ -30,16 +30,6 @@ const CreateQuiz = () => {
     }
   };
 
-  const addQuestion = () => {
-    setQuestionData([...questionData, { question: '', options: ['', '', '', ''], correctOption: 0 }]);
-  };
-
-  const removeQuestion = (index) => {
-    const data = [...questionData];
-    data.splice(index, 1);
-    setQuestionData(data);
-  };
-
   const addOption = (questionIndex) => {
     const data = [...questionData];
     data[questionIndex].options = [...data[questionIndex].options, ''];
@@ -68,8 +58,6 @@ const CreateQuiz = () => {
       description={description}
       updateQuizDescription={setDescription}
       checkCorrectOption={checkCorrectOption}
-      addQuestion={addQuestion}
-      removeQuestion={removeQuestion}
       addOption={addOption}
       removeOption={removeOption}
     />

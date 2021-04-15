@@ -35,16 +35,6 @@ const UpdateQuiz = () => {
     }
   };
 
-  const addQuestion = () => {
-    setQuestionData([...questionData, { question: '', options: ['', '', '', ''], correctOption: 0 }]);
-  };
-
-  const removeQuestion = (index) => {
-    const deletedQuestion = [...questionData];
-    deletedQuestion.splice(index, 1);
-    setQuestionData(deletedQuestion);
-  };
-
   const addOption = (questionIndex) => {
     const data = [...questionData];
     data[questionIndex].options = [...data[questionIndex].options, ''];
@@ -103,8 +93,6 @@ const UpdateQuiz = () => {
         description={description}
         updateQuizDescription={setDescription}
         checkCorrectOption={checkCorrectOption}
-        addQuestion={addQuestion}
-        removeQuestion={removeQuestion}
         addOption={addOption}
         removeOption={removeOption}
         formType='Update Quiz'

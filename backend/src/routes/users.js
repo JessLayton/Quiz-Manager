@@ -50,7 +50,7 @@ router.post('/register', async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ msg: 'Unexpected error occurred' });
   }
 });
 
@@ -80,7 +80,7 @@ router.post('/login', async (req, res) => {
       },
     });
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ msg: 'Unexpected error occurred' });
   }
 });
 
@@ -89,7 +89,7 @@ router.get('/tokenIsValid', auth, async (req, res) => {
     return res.status(200).json({ user: { id: req._id, username: req.user, role: req.role } });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ msg: 'Unexpected error occurred' });
   }
 });
 

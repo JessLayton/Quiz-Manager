@@ -14,7 +14,13 @@ const questionSchema = new mongoose.Schema({
     },
   },
   correctOption: {
-    type: Number, default: 1, required: true,
+    type: Number,
+    default: 1,
+    required: true,
+    validate: {
+      validator: (option) => option > 0 && option <= 4,
+      message: 'Correct option must correspond to an option index',
+    },
   },
 });
 

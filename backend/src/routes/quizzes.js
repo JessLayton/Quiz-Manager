@@ -133,7 +133,7 @@ router.put('/updateQuiz/:id', auth, editorAccess, async (req, res) => {
       }
     });
     if (missingCorrectOptions.length > 0) {
-      return res.status(409).json({ msg: `Correct options are missing from the following questions: ${missingCorrectOptions.join(', ')}` });
+      return res.status(400).json({ msg: `Correct options are missing from the following questions: ${missingCorrectOptions.join(', ')}` });
     }
     Quiz.findOneAndUpdate({ _id: id },
       {
